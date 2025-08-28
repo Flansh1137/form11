@@ -9,29 +9,59 @@ export default function App() {
     comments: "",
   });
 
-  // Map Google form entry names to state keys
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const fieldMap = {
-    "entry.2005620554": "fullName",
-    "entry.1045781291": "email",
-    "entry.1065046570": "address",
-    "entry.1166974658": "phone",
-    "entry.839337160": "comments",
+    fullName: "entry.2005620554",
+    email: "entry.1045781291",
+    address: "entry.1065046570",
+    phone: "entry.1166974658",
+    comments: "entry.839337160",
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [fieldMap[name]]: value,
+      [e.target.name]: e.target.value,
     });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formBody = new FormData();
+    formBody.append(fieldMap.fullName, formData.fullName);
+    formBody.append(fieldMap.email, formData.email);
+    formBody.append(fieldMap.address, formData.address);
+    formBody.append(fieldMap.phone, formData.phone);
+    formBody.append(fieldMap.comments, formData.comments);
+
+    try {
+      await fetch(
+        "https://docs.google.com/forms/d/e/1FAIpQLScsIi11IP3EOXaM6PnRn8m43dYO_VLLCuEpL8B_sWQ7iUXHUQ/formResponse",
+        {
+          method: "POST",
+          mode: "no-cors", // prevents CORS errors
+          body: formBody,
+        }
+      );
+      setIsSubmitted(true);
+      setFormData({
+        fullName: "",
+        email: "",
+        address: "",
+        phone: "",
+        comments: "",
+      });
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   };
 
   return (
     <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
       <form
-        action="https://docs.google.com/forms/d/e/1FAIpQLScsIi11IP3EOXaM6PnRn8m43dYO_VLLCuEpL8B_sWQ7iUXHUQ/formResponse"
-        method="POST"
-        target="_self"
+        onSubmit={handleSubmit}
         style={{
           display: "flex",
           flexDirection: "column",
@@ -45,9 +75,15 @@ export default function App() {
       >
         <h2 style={{ textAlign: "center" }}>Google Form Submission</h2>
 
+        {isSubmitted && (
+          <p style={{ color: "green", textAlign: "center" }}>
+            ✅ Thanks! Your response has been submitted.
+          </p>
+        )}
+
         <input
           type="text"
-          name="entry.2005620554"
+          name="fullName"
           placeholder="Full Name"
           value={formData.fullName}
           onChange={handleChange}
@@ -57,7 +93,7 @@ export default function App() {
 
         <input
           type="email"
-          name="entry.1045781291"
+          name="email"
           placeholder="Email"
           value={formData.email}
           onChange={handleChange}
@@ -67,7 +103,7 @@ export default function App() {
 
         <input
           type="text"
-          name="entry.1065046570"
+          name="address"
           placeholder="Address"
           value={formData.address}
           onChange={handleChange}
@@ -77,7 +113,7 @@ export default function App() {
 
         <input
           type="tel"
-          name="entry.1166974658"
+          name="phone"
           placeholder="Phone Number"
           value={formData.phone}
           onChange={handleChange}
@@ -86,7 +122,7 @@ export default function App() {
         />
 
         <textarea
-          name="entry.839337160"
+          name="comments"
           placeholder="Comments"
           rows="4"
           value={formData.comments}
