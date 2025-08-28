@@ -21,7 +21,7 @@ export default function App() {
       <form
         action="https://docs.google.com/forms/d/e/1FAIpQLScsIi11IP3EOXaM6PnRn8m43dYO_VLLCuEpL8B_sWQ7iUXHUQ/formResponse"
         method="POST"
-        target="_blank"
+        target="_self"
         style={{
           display: "flex",
           flexDirection: "column",
@@ -42,6 +42,7 @@ export default function App() {
           value={formData.fullName}
           onChange={handleChange}
           required
+          style={inputStyle}
         />
 
         <input
@@ -51,6 +52,7 @@ export default function App() {
           value={formData.email}
           onChange={handleChange}
           required
+          style={inputStyle}
         />
 
         <input
@@ -60,6 +62,7 @@ export default function App() {
           value={formData.address}
           onChange={handleChange}
           required
+          style={inputStyle}
         />
 
         <input
@@ -69,6 +72,7 @@ export default function App() {
           value={formData.phone}
           onChange={handleChange}
           required
+          style={inputStyle}
         />
 
         <textarea
@@ -77,6 +81,7 @@ export default function App() {
           rows="4"
           value={formData.comments}
           onChange={handleChange}
+          style={inputStyle}
         ></textarea>
 
         <button
@@ -84,10 +89,11 @@ export default function App() {
           style={{
             backgroundColor: "#4CAF50",
             color: "white",
-            padding: "10px",
+            padding: "12px",
             border: "none",
             borderRadius: "5px",
             cursor: "pointer",
+            fontSize: "16px",
           }}
         >
           Submit
@@ -96,3 +102,10 @@ export default function App() {
     </div>
   );
 }
+
+const inputStyle = {
+  padding: "10px",
+  border: "1px solid #ccc",
+  borderRadius: "5px",
+  fontSize: "14px",
+};
