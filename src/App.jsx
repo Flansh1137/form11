@@ -9,10 +9,20 @@ export default function App() {
     comments: "",
   });
 
+  // Map Google form entry names to state keys
+  const fieldMap = {
+    "entry.2005620554": "fullName",
+    "entry.1045781291": "email",
+    "entry.1065046570": "address",
+    "entry.1166974658": "phone",
+    "entry.839337160": "comments",
+  };
+
   const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [fieldMap[name]]: value,
     });
   };
 
