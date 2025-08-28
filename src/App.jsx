@@ -8,7 +8,7 @@ export default function App() {
           Contact Form
         </h2>
         <form
-          action="https://docs.google.com/forms/d/e/1FAIpQLScsIi11IP3EOXaM6PnRn8m43dYO_VLLCuEpL8B_sWQ7iUXHUQ/formresponse"
+          action="https://docs.google.com/forms/d/e/1FAIpQLScsIi11IP3EOXaM6PnRn8m43dYO_VLLCuEpL8B_sWQ7iUXHUQ/formResponse"
           method="POST"
           target="_blank"
           className="space-y-5"
